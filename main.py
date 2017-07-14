@@ -3,9 +3,9 @@ import os.path, json, requests, emoji
 from classes.logger import logger
 log = logger().log
 
-log("[@eggins] PyBase initalised. (github.com/eggins/pybase)", "info")
-log("-----------@_zruss_-----------", "yellow")
-log("         Lets build!", "lightpurple")
+log("[@eggins] PyBase initalised. (github.com/eggins/pybase)", "info", showtime = False)
+log("-----------@_zruss_-----------", "yellow", showtime = False)
+log("         Lets build!", "lightpurple", showtime = False)
 print emoji.emojize(':sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face:')
 
 from classes.shipping import shipping

@@ -1,22 +1,22 @@
 # Nike-Addresses
 
-Info:
+## Info:
 
-Written for Python 2.7 only.
+- Written for Python 2.7 only.
 
-Includes support for US only as of now.
+- Includes support for US only as of now.
 
-Requirements: Modules: requests
+- Requirements: Modules: requests
 
-Other requirements: Verified Nike accounts
+- Other requirements: Verified Nike accounts
 
-Edit config.json and add nike accounts as email:password in accounts.txt
+- Edit config.json and add nike accounts as email:password in accounts.txt
 
-How to run:
+## How to run:
 
-CD to the location via Terminal/CMD
-Python main.py
+- CD to the location via Terminal/CMD
+- Python main.py
 
-Future Features?
+## Future Features?
 
- Add proxy and threading support.
+- [ ] Add Credit Card to accounts

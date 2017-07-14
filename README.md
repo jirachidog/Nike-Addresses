@@ -7,8 +7,8 @@
 - Includes support for US only as of now.
 
 - Requirements: Modules: requests, emoji
-    pip install requests
-    pip install emoji
+    -pip install requests
+    -pip install emoji
 
 - Other requirements: Verified Nike accounts
 

@@ -5,25 +5,27 @@ log = logger().log
 
 
 class shipping:
-    def __init__(self, email, password):
-        self.email    = email
-        self.password = password
+    def __init__(self, x, config):
+        self.x          = x
+        self.email      = x.split(":")[0]
+        self.password   = x.split(":")[1]
+        self.config     = config
 
-    def login(self, email, password, config):
+    def login(self):
         log("Account %s:%s" % (email,password), "info")
 
-        nikeLoginHeaders = {
+        nikeLoginHeader = {
             'User-Agent' : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"
         }
-        s                = requests.Session()
-        s.headers.update(nikeLoginHeaders)
+        s               = requests.Session()
+        s.headers.update(nikeLoginHeader)
 
 
         loginData = {
             'client_id' : 'HlHa2Cje3ctlaOqnxvgZXNaAs7T9nAuH',
             'grant_type': 'password',
-            'password'  : password,
-            'username'  : email,
+            'password'  : self.password,
+            'username'  : self.email,
             'ux_id'     : 'com.nike.commerce.nikedotcom.web'
         }
 
@@ -40,25 +42,25 @@ class shipping:
         addingAddressData = {
             "address"     : {"shipping": {"preferred":True,
             "type"        : "shipping",
-            "name"        : {"primary":{"given":config['shipping']['FirstName'], 
-            "family"      : config['shipping']['LastName']}}, 
-            "line1"       : config['shipping']['AddressLine1'],
-            "line2"       : config['shipping']['AddressLine2'],
-            "locality"    : config['shipping']['City'],
-            "province"    : config['shipping']['State'],
-            "code"        : config['shipping']['Zipcode'],
-            "country"     : config['shipping']['Country'],
-            "phone"       : {"primary":config['shipping']['PhoneNumber']},
+            "name"        : {"primary":{"given": self.config['shipping']['FirstName'], 
+            "family"      : self.config['shipping']['LastName']}}, 
+            "line1"       : self.config['shipping']['AddressLine1'],
+            "line2"       : self.config['shipping']['AddressLine2'],
+            "locality"    : self.config['shipping']['City'],
+            "province"    : self.config['shipping']['State'],
+            "code"        : self.config['shipping']['Zipcode'],
+            "country"     : self.config['shipping']['Country'],
+            "phone"       : {"primary": self.config['shipping']['PhoneNumber']},
             "label"       : "shipping_1",
             "guid"        : str(uuid.uuid4())}}}
 
         addingAddressHeaders = {
-            "Authorization": ("Bearer "+access_token)
+            "Authorization": ("Bearer "+ access_token)
         }
         addingAddress = s.put("https://api.nike.com/user/commerce", json = addingAddressData,headers = addingAddressHeaders)
 
         if addingAddress.status_code == 200 or addingAddress.status_code == 201 or addingAddress.status_code == 202:
-            log("Address added to %s" % (email), "success")
+            log("Address added to %s" % (self.email), "success")
 
         else:
             log("Brother we had an issue", "error")

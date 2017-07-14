@@ -37,7 +37,25 @@ class shipping:
 
         access_token  = login.json()['access_token']
         log('Adding address to account', "info")
-        addingAddress = s.put("https://api.nike.com/user/commerce", json = {"address": {"shipping": {"preferred":True,"type":"shipping","name":{"primary":{"given":config['shipping']['FirstName'], "family": config['shipping']['LastName']}}, "line1": config['shipping']['AddressLine1'],"line2":config['shipping']['AddressLine2'],"locality":config['shipping']['City'],"province":config['shipping']['State'],"code":config['shipping']['Zipcode'],"country":config['shipping']['Country'],"phone":{"primary":config['shipping']['PhoneNumber']},"label":"shipping_1","guid":str(uuid.uuid4())}}},headers={"Authorization":("Bearer "+access_token)})
+        addingAddressData = {
+            "address"     : {"shipping": {"preferred":True,
+            "type"        : "shipping",
+            "name"        : {"primary":{"given":config['shipping']['FirstName'], 
+            "family"      : config['shipping']['LastName']}}, 
+            "line1"       : config['shipping']['AddressLine1'],
+            "line2"       : config['shipping']['AddressLine2'],
+            "locality"    : config['shipping']['City'],
+            "province"    : config['shipping']['State'],
+            "code"        : config['shipping']['Zipcode'],
+            "country"     : config['shipping']['Country'],
+            "phone"       : {"primary":config['shipping']['PhoneNumber']},
+            "label"       : "shipping_1",
+            "guid"        : str(uuid.uuid4())}}}
+
+        addingAddressHeaders = {
+            "Authorization": ("Bearer "+access_token)
+        }
+        addingAddress = s.put("https://api.nike.com/user/commerce", json = addingAddressData,headers = addingAddressHeaders)
 
         if addingAddress.status_code == 200 or addingAddress.status_code == 201 or addingAddress.status_code == 202:
             log("Address added to %s" % (email), "success")

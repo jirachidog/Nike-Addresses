@@ -8,7 +8,7 @@ log("-----------@_zruss_-----------", "yellow", showtime = False)
 log("         Lets build!", "lightpurple", showtime = False)
 print emoji.emojize(':sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face:')
 
-from classes.shipping import shipping
+from classes.Nike import Nike
 
 if not os.path.exists("config.json"):
     log("Config.json not found brother!!!", "error")
@@ -22,14 +22,14 @@ with open('config.json') as json_data_file:
 with open('accounts.txt') as accounts_file:
     accounts = accounts_file.read().splitlines()
 
-def addShippingAddress():
+def addInfo():
 
-    l = shipping(x, config)
+    l = Nike(x, config)
     Login = l.login()
 
 for x in accounts:
     
-    addShippingAddress()
+    addInfo()
 
 
 

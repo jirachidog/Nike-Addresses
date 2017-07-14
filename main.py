@@ -5,7 +5,7 @@ log = logger().log
 
 log("[@eggins] PyBase initalised. (github.com/eggins/pybase)", "info")
 log("-----------@_zruss_-----------", "yellow")
-log("\t\t\t Lets build!", "lightpurple")
+log("         Lets build!", "lightpurple")
 from classes.shipping import shipping
 
 if not os.path.exists("config.json"):

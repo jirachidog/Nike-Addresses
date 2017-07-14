@@ -12,7 +12,13 @@
 
 - Other requirements: Verified Nike accounts
 
+## Installation
+
 - Edit config.json and add nike accounts as email:password in accounts.txt
+
+- In config AMEX cards are "AmericanExpress", MasterCard is "MasterCard", Visa is "Visa", Discover is "Discover"
+
+- Credit Card must be entered without spaces and using full year (ex: 2022)
 
 ## How to run:
 
@@ -21,4 +27,8 @@
 
 ## Future Features?
 
-- [ ] Add Credit Card to accounts
+- [x] Add Credit Card to accounts
+
+
+## Development Credits
+**Twitter** [@_zruss_](https://twitter.com/_zruss_)

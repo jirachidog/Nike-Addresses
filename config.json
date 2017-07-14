@@ -1,13 +1,30 @@
 {
-  "shipping" : {
-    "Country"     : "US",
-    "FirstName"  : "Little",
-    "LastName" : "Cunt",
-    "AddressLine1" : "6969 Blueberry Circle",
-    "AddressLine2" : "",
-    "City" : "New York",
-    "State" : "NY",
-    "Zipcode" : "90210",
-    "PhoneNumber" : "4049109032"
-  }
+    "shipping" : {
+        "Country" : "US",
+        "FirstName" : "Little",
+        "LastName" : "Cunt",
+        "AddressLine1" : "6969 Blueberry Circle",
+        "AddressLine2" : "",
+        "City" : "New York",
+        "State" : "NY",
+        "Zipcode" : "90210",
+        "PhoneNumber" : "4049109032"
+    },
+
+
+    "billing" : {
+        "CardType" : "AmericanExpress",
+        "CardNumber" : "345638165453748",
+        "ExpirationMonth" : "8",
+        "ExpirationYear" : "2020",
+        "FirstName" : "Little",
+        "LastName" : "Cunt",
+        "AddressLine1" : "6969 Blueberry Circle",
+        "AddressLine2" : "",
+        "AddressLine3" : "",
+        "City" : "New York",
+        "PostalCode" : "90210",
+        "State" : "NY",
+        "PhoneNumber" : "4049109032"
+    }
 }

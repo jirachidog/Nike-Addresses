@@ -1,0 +1,13 @@
+{
+  "shipping" : {
+    "Country"     : "US",
+    "FirstName"  : "Little",
+    "LastName" : "Cunt",
+    "AddressLine1" : "6969 Blueberry Circle",
+    "AddressLine2" : "",
+    "City" : "New York",
+    "State" : "NY",
+    "Zipcode" : "90210",
+    "PhoneNumber" : "4049109032"
+  }
+}

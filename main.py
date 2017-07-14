@@ -1,4 +1,4 @@
-import os.path, json, requests
+import os.path, json, requests, emoji
 
 from classes.logger import logger
 log = logger().log
@@ -6,6 +6,8 @@ log = logger().log
 log("[@eggins] PyBase initalised. (github.com/eggins/pybase)", "info")
 log("-----------@_zruss_-----------", "yellow")
 log("         Lets build!", "lightpurple")
+print emoji.emojize(':sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face:')
+
 from classes.shipping import shipping
 
 if not os.path.exists("config.json"):
@@ -22,11 +24,11 @@ with open('accounts.txt') as accounts_file:
 
 def addShippingAddress():
 
-    l = shipping(email, password)
-    Login = l.login(email, password, config)
+    l = shipping(x, config)
+    Login = l.login()
 
 for x in accounts:
-    email, password = x.split(':')
+    
     addShippingAddress()
 
 

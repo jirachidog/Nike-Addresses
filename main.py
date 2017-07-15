@@ -1,4 +1,4 @@
-import os.path, json, requests, emoji
+import os.path, json, requests, emoji, os
 
 from classes.logger import logger
 log = logger().log
@@ -6,7 +6,8 @@ log = logger().log
 log("[@eggins] PyBase initalised. (github.com/eggins/pybase)", "info", showtime = False)
 log("-----------@_zruss_-----------", "yellow", showtime = False)
 log("         Lets build!", "lightpurple", showtime = False)
-print emoji.emojize(':sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face:')
+if not os.name == 'nt':
+    print emoji.emojize(':sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face: :sign_of_the_horns: :cowboy_hat_face:')
 
 from classes.Nike import Nike
 
@@ -30,6 +31,3 @@ def addInfo():
 for x in accounts:
     
     addInfo()
-
-
-

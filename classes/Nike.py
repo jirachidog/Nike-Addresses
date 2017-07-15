@@ -1,4 +1,4 @@
-import json, requests, uuid
+import requests, uuid, time
 
 from classes.logger import logger
 log = logger().log
@@ -30,12 +30,17 @@ class Nike:
         }
 
         log("Attempting login", "info")
-        login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=239&experienceVersion=206&uxid=com.nike.commerce.nikedotcom.web&locale=en_US&backendEnvironment=default&browser=Google%20Inc.&os=undefined&mobile=false&native=false", json=loginData)
 
-        if login.status_code == 200:
-            log("Brother we logged in", "success")
-        else:
-            log("Brother login is fucked", "error")
+
+
+        while True:
+            login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=239&experienceVersion=206&uxid=com.nike.commerce.nikedotcom.web&locale=en_US&backendEnvironment=default&browser=Google%20Inc.&os=undefined&mobile=false&native=false",json=loginData)
+            if login.status_code == 200:
+                log("Brother we logged in", "success")
+                break
+            else:
+                log(login.text)
+                time.sleep(5)
 
         access_token  = login.json()['access_token']
         user_id       = login.json()['user_id']

@@ -22,11 +22,12 @@ class Nike:
 
 
         loginData = {
-            'client_id' : 'HlHa2Cje3ctlaOqnxvgZXNaAs7T9nAuH',
-            'grant_type': 'password',
-            'password'  : self.password,
-            'username'  : self.email,
-            'ux_id'     : 'com.nike.commerce.nikedotcom.web'
+            'client_id'     : 'PbCREuPr3iaFANEDjtiEzXooFl7mXGQ7',
+            'grant_type'    : 'password',
+            'keepMeLoggedIn': 'true',
+            'password'      : self.password,
+            'username'      : self.email,
+            'ux_id'         : 'com.nike.commerce.nikedotcom.web'
         }
 
         log("Attempting login", "info")
@@ -34,7 +35,7 @@ class Nike:
 
 
         while True:
-            login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=239&experienceVersion=206&uxid=com.nike.commerce.nikedotcom.web&locale=en_US&backendEnvironment=default&browser=Google%20Inc.&os=undefined&mobile=false&native=false",json=loginData)
+            login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=287&experienceVersion=249&uxid=com.nike.commerce.snkrs.web&locale=en_US&backendEnvironment=identity&browser=Google%20Inc.&os=undefined&mobile=false&native=false",json=loginData)
             if login.status_code == 200:
                 log("Brother we logged in", "success")
                 break
@@ -71,46 +72,40 @@ class Nike:
         else:
             log("Brother we had an issue", "error")
 
+        creditCardInfoID = str(uuid.uuid4())
+
+        cardData = {
+            "accountNumber"   : self.config['billing']['CardNumber'],
+            "cardType"        : self.config['billing']['CardType'],
+            "expirationMonth" : self.config['billing']['ExpirationMonth'],
+            "expirationYear"  : self.config['billing']['ExpirationYear'],
+            "creditCardInfoId": creditCardInfoID,
+            "cvNumber"        : ""
+        }
 
         billingData = {
-            'countrySelector'  : 'US',
-            'creditCardCountry': 'US',
-            'cardTypeSelect'   : self.config['billing']['CardType'],
-            'creditCardType'   : self.config['billing']['CardType'],
-            'creditCardNumber' : self.config['billing']['CardNumber'],
-            'expirationMonth'  : self.config['billing']['ExpirationMonth'],
-            'expirationYear'   : self.config['billing']['ExpirationYear'],
-            'firstName'        : self.config['billing']['FirstName'],
-            'lastName'         : self.config['billing']['LastName'],
-            'address1'         : self.config['billing']['AddressLine1'],
-            'address2'         : self.config['billing']['AddressLine2'],
-            'address3'         : self.config['billing']['AddressLine3'],
-            'city'             : self.config['billing']['City'],
-            'postalCode'       : self.config['billing']['PostalCode'],
-            'stateSelector'    : self.config['billing']['State'],
-            'state'            : self.config['billing']['State'],
-            'phoneNumber'      : self.config['billing']['PhoneNumber'],
-            'faxNumber'        : self.config['billing']['PhoneNumber'],
-            'email'            : self.email,
-            'secureProxyKey'   : user_id,
-            'view'             : 'desktop',
-            'route'            : '',
-            'langLocale'       : 'en_US',
-            'action'           : 'addNewCreditCard',
-            'country'          : 'US',
-            'successURL'       : '/profile/creditcards.htm?langLocale=en_US&view=desktop&country=US'
-
+            "currency" : "USD",
+            "isDefault": "true",
+            "billingAddress": {"address1"   : self.config['billing']['AddressLine1'],
+                               "city"       : self.config['billing']['City'],
+                               "country"    : "US",
+                               "firstName"  : self.config['billing']['FirstName'],
+                               "guid"       : str(uuid.uuid4()),
+                               "lastName"   : self.config['billing']['LastName'],
+                               "phoneNumber": self.config['billing']['PhoneNumber'],
+                               "postalCode" : self.config['billing']['PostalCode'],
+                               "state"      : self.config['billing']['State']},
+            "creditCardInfoId": creditCardInfoID,
+            "type"            : "CreditCard"
         }
 
-        billingHeaders = {
-            'Host'     : 'payment.nike.com',
-            'Origin'   : 'https://payment.nike.com'
-        }
-        
-        addingBilling  = s.post("https://payment.nike.com/payment/profile/addNewCard.htm", data = billingData, headers = billingHeaders)
+        CCUrl = "https://paymentcc.nike.com/creditcardsubmit/%s/store" % (creditCardInfoID)
 
-        
-        if addingBilling.status_code == 200 or addingBilling.status_code == 201 or addingBilling.status_code == 202:
+        addingBilling  = s.post(url = CCUrl, json = cardData, headers = addingAddressHeaders)
+
+        savingBilling = s.post("https://api.nike.com/commerce/storedpayments/consumer/savepayment", json = billingData, headers = addingAddressHeaders)
+
+        if savingBilling.status_code == 200 or savingBilling.status_code == 201 or savingBilling.status_code == 202:
             log("Credit Card added to %s" % (self.email), "success")
 
         else:

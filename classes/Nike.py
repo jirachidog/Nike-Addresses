@@ -31,11 +31,16 @@ class Nike:
         }
 
         log("Attempting login", "info")
-
+        my_cookies = {
+            "CONSUMERCHOICE" : "{}/en_{}".format(self.config['shipping']['Country'], self.config['shipping']['Country']),
+            "NIKE_COMMERCE_COUNTRY" : "{}".format(self.config['shipping']['Country']),
+            "NIKE_COMMERCE_LANG_LOCALE" : "en_{}".format(self.config['shipping']['Country']),
+            "nike_locale" : "{}/en_{}".format(self.config['shipping']['Country'], self.config['shipping']['Country'])
+        }
 
 
         while True:
-            login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=287&experienceVersion=249&uxid=com.nike.commerce.snkrs.web&locale=en_US&backendEnvironment=identity&browser=Google%20Inc.&os=undefined&mobile=false&native=false",json=loginData)
+            login = s.post("https://unite.nikecloud.com/login?appVersion=281&experienceVersion=244&uxid=com.nike.commerce.snkrs.ios&locale=en_US&backendEnvironment=identity&browser=Apple+Computer%2C+Inc.&os=undefined&mobile=true&native=true",json=loginData, cookies = my_cookies)
             if login.status_code == 200:
                 log("Brother we logged in", "success")
                 break
@@ -64,7 +69,7 @@ class Nike:
         addingAddressHeaders = {
             "Authorization": ("Bearer "+ access_token)
         }
-        addingAddress = s.put("https://api.nike.com/user/commerce", json = addingAddressData, headers = addingAddressHeaders)
+        addingAddress = s.put("https://api.nike.com/user/commerce", json = addingAddressData, headers = addingAddressHeaders, cookies = my_cookies)
 
         if addingAddress.status_code == 200 or addingAddress.status_code == 201 or addingAddress.status_code == 202:
             log("Address added to %s" % (self.email), "success")
@@ -101,12 +106,14 @@ class Nike:
 
         CCUrl = "https://paymentcc.nike.com/creditcardsubmit/%s/store" % (creditCardInfoID)
 
-        addingBilling  = s.post(url = CCUrl, json = cardData, headers = addingAddressHeaders)
+        addingBilling  = s.post(url = CCUrl, json = cardData, headers = addingAddressHeaders, cookies = my_cookies)
 
-        savingBilling = s.post("https://api.nike.com/commerce/storedpayments/consumer/savepayment", json = billingData, headers = addingAddressHeaders)
+        savingBilling = s.post("https://api.nike.com/commerce/storedpayments/consumer/savepayment", json = billingData, headers = addingAddressHeaders, cookies = my_cookies)
 
         if savingBilling.status_code == 200 or savingBilling.status_code == 201 or savingBilling.status_code == 202:
             log("Credit Card added to %s" % (self.email), "success")
-
+            with open('SuccessLog' + '.txt', 'a') as f:
+                f.write('' + self.email + ':' + self.password + ':' + self.cvv + '\n')
+                f.close()
         else:
-            log("Brother we had an issue", "error")
+            log("Brother we had an issue adding credit card", "error")

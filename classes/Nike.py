@@ -113,7 +113,7 @@ class Nike:
         if savingBilling.status_code == 200 or savingBilling.status_code == 201 or savingBilling.status_code == 202:
             log("Credit Card added to %s" % (self.email), "success")
             with open('SuccessLog' + '.txt', 'a') as f:
-                f.write('' + self.email + ':' + self.password + ':' + self.cvv + '\n')
+                f.write('' + self.email + ':' + self.password + '\n')
                 f.close()
         else:
             log("Brother we had an issue adding credit card", "error")

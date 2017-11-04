@@ -40,7 +40,7 @@ class Nike:
 
 
         while True:
-            login = s.post("https://unite.nikecloud.com/login?appVersion=281&experienceVersion=244&uxid=com.nike.commerce.snkrs.ios&locale=en_US&backendEnvironment=identity&browser=Apple+Computer%2C+Inc.&os=undefined&mobile=true&native=true",json=loginData, cookies = my_cookies)
+            login = s.post("https://unite.nike.com/loginWithSetCookie?appVersion=332&experienceVersion=287&uxid=com.nike.commerce.snkrs.web&locale=zh_CN&backendEnvironment=identity&browser=Google%20Inc.&os=undefined&mobile=false&native=false&visit=1&visitor=3c59c9a2-fd01-474c-85d0-c53285791695",json=loginData, cookies = my_cookies)
             if login.status_code == 200:
                 log("Brother we logged in", "success")
                 break
